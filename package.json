@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "http-server"
+  },
+  "dependencies": {
+    "angular": "^1.4.3",
+    "todomvc-common": "^1.0.0",
+    "todomvc-app-css": "^1.0.1",
+    "angular-route": "^ 1.4.3"
+  },
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  }
+}
