@@ -19,5 +19,27 @@
                 title: "第二个任务"
             }
         ]
+
+        //Methods
+        vm.addTask = addTask;
+        vm.removeTask = removeTask;
+        ////
+        function addTask(){
+
+            var newTask = {
+                title: vm.newTask.trim(),
+            };
+
+
+            if(!newTask.title){
+                return;
+            }
+            vm.tasks.push(newTask);
+            vm.newTask = '';
+        }
+
+        function  removeTask(task){
+            vm.tasks.splice(vm.tasks.indexOf(task), 1);
+        }
     }
 })();
