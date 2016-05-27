@@ -16,12 +16,15 @@
     </header>
     <section id="main" ng-cloak>
         <ul id="todo-list">
-            <li ng-repeat="task in vm.tasks">
+            <li ng-repeat="task in vm.tasks" ng-class="{completed: task.completed, editing: task === vm.editedTask}">
                 <div class="view">
-                    <label>{{task.title}}</label>
+                    <input class="toggle" type="checkbox" ng-model="task.completed">
+                    <label ng-dblclick="vm.editTask(task)">{{task.title}}</label>
                     <button class="destroy" ng-click="vm.removeTask(task)"></button>
-
                 </div>
+                <form>
+                    <input class="edit" ng-trim="false" ng-model="task.title"  >
+                </form>
             </li>
         </ul>
     </section>

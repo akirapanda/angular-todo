@@ -13,7 +13,8 @@
         var vm = this;
         vm.tasks = [
             {
-                title: "第一个任务"
+                title: "第一个任务",
+                completed: true
             },
             {
                 title: "第二个任务"
@@ -23,6 +24,7 @@
         //Methods
         vm.addTask = addTask;
         vm.removeTask = removeTask;
+        vm.editTask = editTask;
         ////
         function addTask(){
 
@@ -40,6 +42,12 @@
 
         function  removeTask(task){
             vm.tasks.splice(vm.tasks.indexOf(task), 1);
+        }
+
+
+        function editTask(task){
+            console.info("click");
+            vm.editedTask = task;
         }
     }
 })();
