@@ -8,8 +8,8 @@
         .module('todomvc')
         .controller('TodoController',TodoController);
 
-    TodoController.$inject = ['$routeParams'];
-    function TodoController($routeParams){
+    TodoController.$inject = ['$scope','$routeParams','TaskService'];
+    function TodoController($scope,$routeParams,TaskService){
         var vm = this;
         init();
         //Methods
@@ -17,46 +17,31 @@
         vm.removeTask = removeTask;
         vm.editTask = editTask;
         ////
-        function _filterDataByStatus(tasks,status){
+        function _filterByStatus(status){
             if (status === 'active'){
-                return tasks.filter(function(task){
-                    return (task.completed != true )
-                }) 
-            }else if(status === 'completed'){
-                return tasks.filter(function(task){
-                    return (task.completed == true )
-                }) 
+                return {completed:false};
+            }else if (status === 'completed'){
+                return {completed:true};
             }else{
-                return tasks;
+                return {};
             }
         }
         function init(){
-            var tasks = [
-            {
-                title: "第一个任务",
-                completed: true
-            },
-            {
-                title: "第二个任务",
-                completed: false
-
-            }];
-
-            vm.status = $routeParams.status||"";
-            vm.tasks = _filterDataByStatus(tasks,vm.status)
+            vm.status =  $routeParams.status||"";
+            vm.statusFilter =_filterByStatus(vm.status);
+            vm.tasks = TaskService.tasks;
         }
         function addTask(){
-
             var newTask = {
-                title: vm.newTask.trim(),
+                title: vm.newTask,
+                completed:false
             };
 
-
             if(!newTask.title){
-                return;
+                return false;
             }
+            
             vm.tasks.push(newTask);
-            vm.newTask = '';
         }
 
         function  removeTask(task){
@@ -65,7 +50,6 @@
 
 
         function editTask(task){
-            console.info("click");
             vm.editedTask = task;
         }
     }

@@ -7,7 +7,8 @@
     </header>
     <section id="main" ng-cloak>
         <ul id="todo-list">
-            <li ng-repeat="task in vm.tasks" ng-class="{completed: task.completed, editing: task === vm.editedTask}">
+            {{}}
+            <li ng-repeat="task in vm.tasks|filter:vm.statusFilter " ng-class="{completed: task.completed, editing: task === vm.editedTask}">
                 <div class="view">
                     <input class="toggle" type="checkbox" ng-model="task.completed">
                     <label ng-dblclick="vm.editTask(task)">{{task.title}}</label>
@@ -20,7 +21,7 @@
         </ul>
     </section>
 
-    <footer id="footer" ng-show="vm.tasks.length" ng-cloak>
+    <footer id="footer" ng-cloak>
         <span id="todo-count"><strong>{{remainingCount}}</strong>
             <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
         </span>
