@@ -1,0 +1,39 @@
+<section id="todoapp">
+    <header id="header">
+        <h1>todos</h1>
+        <form id="todo-form" ng-submit="vm.addTask()">
+            <input id="new-todo" placeholder="添加新的任务?" ng-model="vm.newTask" autofocus>
+        </form>
+    </header>
+    <section id="main" ng-cloak>
+        <ul id="todo-list">
+            <li ng-repeat="task in vm.tasks" ng-class="{completed: task.completed, editing: task === vm.editedTask}">
+                <div class="view">
+                    <input class="toggle" type="checkbox" ng-model="task.completed">
+                    <label ng-dblclick="vm.editTask(task)">{{task.title}}</label>
+                    <button class="destroy" ng-click="vm.removeTask(task)"></button>
+                </div>
+                <form>
+                    <input class="edit" ng-trim="false" ng-model="task.title"  >
+                </form>
+            </li>
+        </ul>
+    </section>
+
+    <footer id="footer" ng-show="vm.tasks.length" ng-cloak>
+        <span id="todo-count"><strong>{{remainingCount}}</strong>
+            <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+        </span>
+        <ul id="filters">
+            <li>
+                <a ng-class="{selected: vm.status == ''} " href="#/">All</a>
+            </li>
+            <li>
+                <a ng-class="{selected: vm.status == 'active'}" href="#/active">Active</a>
+            </li>
+            <li>
+                <a ng-class="{selected: vm.status == 'completed'}" href="#/completed">Completed</a>
+            </li>
+        </ul>
+    </footer>
+</section>

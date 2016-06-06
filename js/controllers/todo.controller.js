@@ -8,24 +8,43 @@
         .module('todomvc')
         .controller('TodoController',TodoController);
 
-    TodoController.$inject = [];
-    function TodoController(){
+    TodoController.$inject = ['$routeParams'];
+    function TodoController($routeParams){
         var vm = this;
-        vm.tasks = [
-            {
-                title: "第一个任务",
-                completed: true
-            },
-            {
-                title: "第二个任务"
-            }
-        ]
-
+        init();
         //Methods
         vm.addTask = addTask;
         vm.removeTask = removeTask;
         vm.editTask = editTask;
         ////
+        function _filterDataByStatus(tasks,status){
+            if (status === 'active'){
+                return tasks.filter(function(task){
+                    return (task.completed != true )
+                }) 
+            }else if(status === 'completed'){
+                return tasks.filter(function(task){
+                    return (task.completed == true )
+                }) 
+            }else{
+                return tasks;
+            }
+        }
+        function init(){
+            var tasks = [
+            {
+                title: "第一个任务",
+                completed: true
+            },
+            {
+                title: "第二个任务",
+                completed: false
+
+            }];
+
+            vm.status = $routeParams.status||"";
+            vm.tasks = _filterDataByStatus(tasks,vm.status)
+        }
         function addTask(){
 
             var newTask = {
