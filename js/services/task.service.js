@@ -9,32 +9,36 @@
     TaskService.$inject = [];
     function TaskService()
     {
+      var STORAGE_ID = 'todos';
+
       var service = {
-        tasks:[
-        {
-            title: "第一个任务",
-            completed: true
+
+
+        tasks:[],
+
+        _getFromLocalStorage: function () {
+          return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
         },
-        {
-            title: "第二个任务",
-            completed: false
-        }],
 
+        _saveToLocalStorage: function (task) {
+          localStorage.setItem(STORAGE_ID, JSON.stringify(task));
+        },
+        get: function () {
+            return angular.copy(service._getFromLocalStorage(), service.tasks);
+        },
 
-        add: function(title){
-          var newTask = {
-              title: title,
-              completed:false
-          };
-
-          if(!newTask.title){
-              return false;
-          }
-        
-          service.tasks.push(newTask);
-          return true;
-        } 
-
+        insert: function (task) {
+          service.tasks.push(task);
+          service._saveToLocalStorage(service.tasks);
+        },
+        delete: function (task) {
+          service.tasks.splice(service.tasks.indexOf(task), 1);
+          service._saveToLocalStorage(service.tasks);
+        },
+        put: function (task, index) {
+          service.tasks[index] = task;
+          service._saveToLocalStorage(service.tasks);
+        }
       }// end of service
       return service;
 

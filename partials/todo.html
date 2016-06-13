@@ -14,8 +14,8 @@
                     <label ng-dblclick="vm.editTask(task)">{{task.title}}</label>
                     <button class="destroy" ng-click="vm.removeTask(task)"></button>
                 </div>
-                <form>
-                    <input class="edit" ng-trim="false" ng-model="task.title"  >
+                <form ng-submit="vm.saveEdit(task)">
+                    <input class="edit" ng-trim="false"  ng-blur="vm.saveEdit(task)" ng-model="task.title" />
                 </form>
             </li>
         </ul>
